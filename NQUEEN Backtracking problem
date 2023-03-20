@@ -1,0 +1,75 @@
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+        List<List<String>> ans= new ArrayList<>();
+        char[][] board= new char[n][n];
+
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                board[i][j]='.';
+            }
+        }
+        help(0,n,ans,board);
+        return ans;
+    }
+
+    public void help(int i,int n, List<List<String>> ans, char[][] board)
+    {
+        if(i==n)
+        {
+            List<String> temp= new ArrayList<>();
+          
+                for(int j=0;j<n;j++)
+                {
+                    //temp.add(board[k][j]);
+                    String s= new String(board[j]);
+                    temp.add(s);
+                }
+            
+                        ans.add(temp);
+            return;
+        }
+
+        for(int j=0;j<n;j++)
+        {
+            if(issafe(i,j,n,board))
+            {
+                board[i][j]='Q';
+                help(i+1,n,ans,board);
+                board[i][j]='.';
+
+            }
+
+        }
+       // return false;
+    }
+
+    public boolean issafe(int i, int j, int n, char[][] board)
+    {
+        for(int row=i;row>=0;row--)
+        {
+            if(board[row][j]=='Q')
+            {
+                return false;
+            }
+        }
+        int col=j;
+        for(int row=i;row>=0 && col>=0;row--,col--)
+        {
+            if(board[row][col]=='Q')
+            {
+                return false;
+            }
+        }
+        int col1=j;
+        for(int row=i; row>=0 && col1<n; row--, col1++)
+        {
+            if(board[row][col1]=='Q')
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+}
