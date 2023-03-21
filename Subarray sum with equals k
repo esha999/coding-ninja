@@ -1,0 +1,22 @@
+class Solution {
+    public int subarraySum(int[] nums, int k) {
+        
+        HashMap<Integer,Integer> hm= new HashMap<Integer,Integer>();
+        int currsum=0,count=0;
+        for(int i=0;i<nums.length;i++)
+        {
+            currsum+=nums[i];
+            if(currsum==k)
+            {
+                count++;
+            }
+            if(hm.containsKey(currsum-k))
+            {
+                count+=hm.get(currsum-k);
+            }
+            hm.put(currsum,hm.getOrDefault(currsum,0)+1);
+        }
+
+        return count;
+    }
+}
