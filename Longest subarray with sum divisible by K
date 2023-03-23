@@ -1,0 +1,23 @@
+//logic  k and arr is given
+
+HashMap<Integer,Integer> hm= new HashMap<>();
+int maxlen=0;
+for(int i=0;i<n;i++)
+{
+  int sum= sum+arr[i];
+  int rem= sum%k;
+  if(rem<0)
+  {
+    rem=rem+k; 
+  }
+  if(!hm.containsKey(rem))
+  {
+    hm.put(rem,i);
+  }
+  else{
+    int ind=hm.get(rem);
+    int len= i-ind;
+    maxlen= Math.max(len,maxlen);
+  }
+}
+return maxlen;
