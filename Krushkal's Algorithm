@@ -1,0 +1,110 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+
+class Edge implements Comparable<Edge>{
+	int src,dest,weight;
+
+	Edge(int src, int dest, int weight)
+	{
+		this.src=src;
+		this.dest=dest;
+		this.weight=weight;
+	}
+
+	public int compareTo(Edge that)
+	{
+		return this.weight - that.weight;
+	}
+}
+
+
+public class Solution {
+
+static int parent[];
+
+public static void union(int ed1, int ed2)
+{
+	int x= find(ed1);
+	int y= find(ed2);
+
+	if(x==y)
+	{
+		return;
+	}
+	parent[y]=x;
+}
+
+public static int find(int ed)
+{
+	if(parent[ed]==ed)
+	{
+		return ed;
+	}
+	return find(parent[ed]);
+}
+
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int V = sc.nextInt();
+		int E = sc.nextInt();
+
+		/* Write Your Code Here
+		 * Complete the Rest of the Program
+		 * You have to take input and print the output yourself
+		 */
+		ArrayList<Edge> arr= new ArrayList<>();
+		for(int i=0;i<E;i++)
+		{
+			int ed1=sc.nextInt();
+			int ed2=sc.nextInt();
+			int weight=sc.nextInt();
+
+			arr.add(new Edge(ed1,ed2,weight));
+		}
+
+		parent= new int[V];
+		for(int i=0;i<V;i++)
+		{
+			parent[i]=i;
+		}
+
+		Collections.sort(arr);
+
+		int count=1;
+		for(int i=0;count<V;i++)
+		{
+			Edge edge= arr.get(i);
+			int v1=find(edge.src);
+			int v2=find(edge.dest);
+			
+			if(v1!=v2)
+			{
+			ArrayList<Integer> ans1= new ArrayList<>();
+				union(v1,v2);
+				count++;
+
+				int ed1=edge.src;
+				int ed2=edge.dest;
+				int we=edge.weight;
+				ans1.add(ed1);
+				ans1.add(ed2);
+				ans1.add(we);
+
+			
+					if(ans1.get(0)<ans1.get(1))
+							System.out.print(ans1.get(0)+" "+ans1.get(1)+" "+ans1.get(2));
+					else{
+							System.out.print(ans1.get(1)+" "+ans1.get(0)+" "+ans1.get(2));
+					}
+				
+				System.out.println();
+				//ans.add(ans1);
+				ans1.clear();
+			}
+			
+		}
+
+	}
+}
