@@ -1,0 +1,94 @@
+import java.util.PriorityQueue;
+import java.util.Scanner;
+
+class pair implements Comparable<pair>{
+
+int v;
+int w;
+int e;
+	pair(int v, int e, int w)
+	{
+		this.v=v;
+		this.e=e;
+		this.w=w;
+		
+	}
+
+	public int compareTo(pair that)
+	{
+		return this.w-that.w;
+	}
+
+}
+
+public class Solution {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int V = s.nextInt();
+		int E = s.nextInt();
+
+		/* Write Your Code Here
+		 * Complete the Rest of the Program
+		 * You have to take input and print the output yourself
+		 */
+
+		//ArrayList<ArrayList<Integer>> arr= new ArrayList<ArrayList<>>();
+		int[][] arr= new int[V][V];
+
+		for(int i=0;i<V;i++)
+		{
+			for(int j=0;j<V;j++)
+			{
+				arr[i][j]=0;
+			}
+		}
+		for(int i=0;i<E;i++)
+		{
+			int src= s.nextInt();
+			int dest= s.nextInt();
+			int weight= s.nextInt();
+
+			arr[src][dest]=weight;
+			arr[dest][src]=weight;
+		}
+
+		PriorityQueue<pair> pq= new PriorityQueue<>();
+		//<ArrayList<ArrayList<Integer>>> solve= new ArrayList<ArrayList<ArrayList<Integer>>>();
+
+		pq.add(new pair(0,0,0));
+		boolean visited[]= new boolean[V];
+
+		//int ans=0,j=0;
+	//	solve.get(0).add(0);
+		while(!pq.isEmpty())
+		{
+			pair current= pq.remove();
+			int u= current.v;
+			int u1=current.e;
+			int we=current.w;
+
+			if(visited[u1]==true)
+			{
+				continue;
+			}
+			//ans=ans+current.w;
+			
+			//solve.get(j).add(u);
+			visited[u1]=true;
+			if(u<u1)
+				System.out.println(u+" "+u1+" "+we);
+			else if(u1<u){
+				System.out.println(u1+" "+u+" "+we);
+			}
+			for(int i=0;i<V;i++)
+			{
+				if(arr[u1][i]!=0 && visited[i]!=true)
+				{
+					pq.add(new pair(u1,i,arr[u1][i]));
+				}
+			}
+		}
+		 
+	}
+}
